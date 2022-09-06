@@ -1,4 +1,4 @@
-import { ChatInputApplicationCommandData, CommandInteraction, CommandInteractionOption, CommandInteractionOptionResolver } from "discord.js";
+import { ChatInputApplicationCommandData, CommandInteraction, CommandInteractionOptionResolver, PermissionResolvable } from "discord.js";
 import { ExtendedClient } from "../structures/Client";
 
 interface RunOptions {
@@ -9,6 +9,16 @@ interface RunOptions {
 
 type RunFunction = (options: RunOptions) => any;
 
-export type CommandType = {
+// Essentially says that a command
+// has the basic info for a slash command
+// along with other information mentioned
+// here
 
+// & means that it strictly contains
+// everything from the braces AND
+// the type
+export type CommandType = {
+    userPermissions?: PermissionResolvable[] ;
+    cooldown: number;
+    run: RunFunction;
 } & ChatInputApplicationCommandData

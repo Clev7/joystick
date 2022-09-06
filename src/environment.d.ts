@@ -1,9 +1,9 @@
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
-            botToken: string;
-            guildId: string;
-            environment: "dev" | "prod" | "debug";
+            DISCORD_TOKEN: string;
+            GUILD_ID: string;
+            ENVIRONMENT: "dev" | "prod" | "debug";
         }
     }
 }
