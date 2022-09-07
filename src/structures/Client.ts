@@ -7,6 +7,11 @@ import { RegisterCommandsOptions } from "../types/Client";
 
 const globPromise = promisify(glob);
 
+// This is a custom client based on the Client
+// Class
+
+// Contains a map for each command name to
+// the command itself
 export class ExtendedClient extends Client {
     // It's a map from string to a command
     commands: Collection<string, CommandType> = new Collection();
@@ -20,6 +25,8 @@ export class ExtendedClient extends Client {
         this.login(process.env.DISCORD_TOKEN);
     }
 
+    // This standardizes every event and command
+    // to export their contents with default exports
     async importFile(filePath: string) {
         return (await import(filePath))?.default;
     }
@@ -28,23 +35,29 @@ export class ExtendedClient extends Client {
         // Register for only one ID
         if (guildId) {
             this.guilds.cache.get(guildId)?.commands.set(commands);
-            console.log(`Registering commands to9 ${guildId}`);
+            console.log(`Registering commands to ${guildId}`);
         } else {
             this.application?.commands.set(commands);
             console.log("Registering global commands");
         }
     }
 
+    // loop 
     async registerModules() {
         // Commands
         const slashCommands: ApplicationCommandDataResolvable[] = [];
         // This pattern means get all .ts and .js files one
         // and two subfolders deep
         const commandFiles = await globPromise(`${__dirname}/../commands/*/*{.ts,.js}`);
-        console.log({ commandFiles });
+
+        // This is actually brilliant!
+        // much faster than typing console.long("commandFiles: " + commandFiles);
+        // console.log({ commandFiles });
+
         commandFiles.forEach(async filePath => {
             const command: CommandType = await this.importFile(filePath);
             if (!command.name) return;
+            console.log(command);
 
             this.commands.set(command.name, command);
             slashCommands.push(command);
