@@ -1,7 +1,8 @@
 // This is just more concise than
 // using the two-line option
-require('dotenv').config();
-import { ExtendedClient } from './structures/Client';
+import { ExtendedClient } from "./structures/Client";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 export const client = new ExtendedClient();
 client.start();

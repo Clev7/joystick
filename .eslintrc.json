@@ -3,57 +3,80 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
 	"sourceType": "module",
-	"ecmaVersion": 6,
-	"project": "./tsconfig.json"
+	"ecmaVersion": 6
+	
+	// Not sure why this errors out on
+	// what I put in tsconfig.json's include
+	// "project": "./tsconfig.json"
   },
   "plugins": [
     "@typescript-eslint"
   ],
   "extends": [
-    "eslint:recommended",
-	// Not sure what this does differently tbh
+	// You only need these if you want to
+	// apply all of them.
+	// It's probably better to apply them one-by-one
+	// when you know what you want.
+
+    // "eslint:recommended",
+	// // Needed for integrating eslint with TS
 	// "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/eslint-recommended"
+
+    // "plugin:@typescript-eslint/eslint-recommended"
   ],
   "rules": {
    "arrow-spacing": ["warn", { "before": true, "after": true }],
-		// Both KNR and Stroustrup are ok by me
-		// "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
-		
-		// Not really concerned about that
-		// "comma-dangle": ["error", "always-multiline"],
-		"comma-spacing": "error",
-		"comma-style": "error",
-		"curly": ["error", "multi-line", "consistent"],
-		"dot-location": ["error", "property"],
-		"handle-callback-err": "off",
-		"keyword-spacing": "error",
-		"max-nested-callbacks": ["error", { "max": 4 }],
-		"max-statements-per-line": ["error", { "max": 2 }],
-		"no-console": "off",
-		"no-empty-function": "error",
-		"no-floating-decimal": "error",
-		"no-inline-comments": "error",
-		"no-lonely-if": "error",
-		"no-multi-spaces": "error",
-		"no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
-		"no-shadow": ["error", { "allow": ["err", "resolve", "reject"] }],
-		"no-trailing-spaces": ["error"],
-		"no-var": "error",
-		"object-curly-spacing": ["error", "always"],
-		"prefer-const": "error",
-		// Not sure why but I prefer all double
-		"quotes": ["error", "double"],
-		"space-before-blocks": "error",
-		"space-before-function-paren": ["error", {
-			"anonymous": "never",
-			"named": "never",
-			"asyncArrow": "always"
-		}],
-		"space-in-parens": "error",
-		"space-infix-ops": "error",
-		"space-unary-ops": "error",
-		"spaced-comment": "error",
-		"yoda": "error" 
+	// Both KNR and Stroustrup are ok by me
+	// "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
+	
+	// Not really concerned about that
+	// "comma-dangle": ["error", "always-multiline"],
+	"comma-spacing": "error",
+	"comma-style": "error",
+	"curly": ["error", "multi-line", "consistent"],
+	"dot-location": ["error", "property"],
+	"handle-callback-err": "off",
+	"keyword-spacing": "error",
+	"max-nested-callbacks": ["error", { "max": 4 }],
+	"max-statements-per-line": ["error", { "max": 2 }],
+	"no-console": "off",
+	"no-floating-decimal": "error",
+	"no-inline-comments": "error",
+	"no-lonely-if": "error",
+	"no-multi-spaces": "error",
+	"no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
+	"no-shadow": ["error", { "allow": ["err", "resolve", "reject"] }],
+	"no-trailing-spaces": ["error"],
+	"no-var": "error",
+	"object-curly-spacing": ["error", "always"],
+	"prefer-const": "error",
+	// Not sure why but I prefer all double
+	"quotes": ["error", "double"],
+	"space-before-function-paren": ["error", {
+		"anonymous": "never",
+		"named": "never",
+		"asyncArrow": "always"
+	}],
+	"space-in-parens": "error",
+	"space-infix-ops": "error",
+	"space-unary-ops": "error",
+	"spaced-comment": "error",
+	"yoda": "error",
+	// From cs-discord-at-ucf/Lion
+	// Note: When applicable, you must disable the base rule as it can report incorrect errors
+	"eqeqeq": ["warn", "smart"],
+	"@typescript-eslint/await-thenable": ["error"],
+	"@typescript-eslint/no-extra-non-null-assertion": ["error"],
+	"@typescript-eslint/no-unnecessary-type-assertion": ["error"],
+	"@typescript-eslint/prefer-nullish-coalescing": ["error"],
+	// Hopefully this doesn't interfere with using promise.all when
+	// concurrently calling several async functions
+	"@typescript-eslint/require-await": ["error"],
+	"semi": "off",
+	"@typescript-eslint/semi": ["error"],
+	"space-before-blocks": "error",
+	"no-unused-vars": "off",
+	"@typescript-eslint/no-unused-vars": ["error", {"caughtErrors": "none"}],
+	"@typescript-eslint/no-explicit-any": "warn"
   }
 }

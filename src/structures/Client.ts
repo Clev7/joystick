@@ -15,9 +15,9 @@ const globPromise = promisify(glob);
 export class ExtendedClient extends Client {
     // It's a map from string to a command
     commands: Collection<string, CommandType> = new Collection();
-    
+
     constructor() {
-        super({intents: 32767})
+        super({ intents: 32767 })
     }
 
     start() {
@@ -42,7 +42,7 @@ export class ExtendedClient extends Client {
         }
     }
 
-    // loop 
+    // loop
     async registerModules() {
         // Commands
         const slashCommands: ApplicationCommandDataResolvable[] = [];
