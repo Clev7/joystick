@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any*/
 import { ChatInputApplicationCommandData, CommandInteraction, CommandInteractionOptionResolver, GuildMember, PermissionResolvable } from "discord.js";
 import { ExtendedClient } from "../structures/Client";
 
@@ -22,6 +23,7 @@ type RunFunction = (options: RunOptions) => any;
 // everything from the braces AND
 // the type
 export type CommandType = {
-    userPermissions?: PermissionResolvable[] ;
-    run: RunFunction;
-} & ChatInputApplicationCommandData
+    userPermissions?: PermissionResolvable[],
+    aliases?: string[],
+    run: RunFunction
+} & ChatInputApplicationCommandData;

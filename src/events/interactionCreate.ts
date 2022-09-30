@@ -1,5 +1,5 @@
 import { Event } from "../structures/Event";
-import { client } from ".."
+import { client } from "..";
 import { CommandInteractionOptionResolver } from "discord.js";
 import { ExtendedInteraction } from "../types/Command";
 
@@ -21,6 +21,6 @@ export default new Event("interactionCreate", async (interaction) => {
             args: interaction.options as CommandInteractionOptionResolver,
             client,
             interaction: interaction as ExtendedInteraction
-        })
+        });
     }
 });

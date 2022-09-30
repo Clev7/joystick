@@ -3,11 +3,11 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
 	"sourceType": "module",
-	"ecmaVersion": 6
+	"ecmaVersion": 6,
 	
-	// Not sure why this errors out on
-	// what I put in tsconfig.json's include
-	// "project": "./tsconfig.json"
+	// Needed for linting that
+	// involves type information
+	"project": ["./tsconfig.json"]
   },
   "plugins": [
     "@typescript-eslint"
@@ -50,7 +50,7 @@
 	"no-var": "error",
 	"object-curly-spacing": ["error", "always"],
 	"prefer-const": "error",
-	// Not sure why but I prefer all double
+	// I prefer all double
 	"quotes": ["error", "double"],
 	"space-before-function-paren": ["error", {
 		"anonymous": "never",
@@ -77,6 +77,142 @@
 	"space-before-blocks": "error",
 	"no-unused-vars": "off",
 	"@typescript-eslint/no-unused-vars": ["error", {"caughtErrors": "none"}],
-	"@typescript-eslint/no-explicit-any": "warn"
+	"@typescript-eslint/no-explicit-any": "warn",
+	"@typescript-eslint/naming-convention": [
+		"error",
+		// private class properties and methods should
+		// have leading underscores and be named with
+		// camelCase or UPPER_CASE
+		{
+			"selector": ["classProperty", "classMethod"],
+			"leadingUnderscore": "require",
+			"modifiers": ["private"],
+			"format": ["camelCase", "UPPER_CASE"]
+		},
+		// public static class properties
+		// should not have leading underscores
+		// and have an UPPER_CASE format
+		{
+			"selector": ["classProperty"],
+			"modifiers": ["public", "static"],
+			"leadingUnderscore": "forbid",
+			"format": ["UPPER_CASE"]
+		},
+		// public static class methods
+		// should not have leading underscores
+		// and be named in camelCase
+		{
+			"selector": ["classMethod"],
+			"modifiers": ["public", "static"],
+			"leadingUnderscore": "forbid",
+			"format": ["camelCase"]
+		},
+		// protected class properties and methods
+		// should not have leading underscores
+		// and be named in camelCase or UPPER_CASE
+		{
+			"selector": ["classProperty", "classMethod"],
+			"modifiers": ["protected"],
+			"leadingUnderscore": "forbid",
+			"format": ["UPPER_CASE", "camelCase"]
+		},
+		// public class properties and methods
+		// should not have leading underscores
+		// and be named in camelCase or UPPER_CASE
+		{
+			"selector": ["classProperty", "classMethod"],
+			"modifiers": ["public"],
+			"leadingUnderscore": "forbid",
+			"format": ["UPPER_CASE", "camelCase"]
+		},
+		// interfaces should be PascalCase or UPPER_CASE
+		{
+			"selector": ["interface"],
+			"format": ["PascalCase", "UPPER_CASE"]
+		}
+	]
   }
 }
+
+// Copied from lion
+// {
+//   "env": {
+//     "commonjs": true,
+//     "es6": true,
+//     "node": true,
+//     "jest": true
+//   },
+//   // "extends": ["prettier"],
+//   "globals": {
+//     "Atomics": "readonly",
+//     "SharedArrayBuffer": "readonly"
+//   },
+//   "rules": {
+//     "eqeqeq": ["warn", "smart"],
+//     "eol-last": ["error"],
+//     "@typescript-eslint/await-thenable": ["error"],
+//     "@typescript-eslint/no-extra-non-null-assertion": ["error"],
+//     "@typescript-eslint/no-unnecessary-type-assertion": ["error"],
+//     "@typescript-eslint/prefer-nullish-coalescing": ["error"],
+//     "@typescript-eslint/require-await": ["error"],
+//     "curly": "warn",
+//     "no-var": 2,
+//     "prefer-const": "error",
+//     // note you must disable the base rule as it can report incorrect errors
+//     "semi": "off",
+//     "@typescript-eslint/semi": ["error"],
+//     "space-before-blocks": "error",
+//     "spaced-comment": "warn",
+//     "quotes": "off",
+//     "@typescript-eslint/quotes": ["error", "single", { "avoidEscape": true }],
+//     // note you must disable the base rule as it can report incorrect errors
+//     "no-unused-vars": "off",
+//     "@typescript-eslint/no-unused-vars": ["error", { "caughtErrors": "none" }],
+//     "@typescript-eslint/no-explicit-any": "error",
+//     "@typescript-eslint/naming-convention": [
+//       "error",
+//       {
+//         "selector": ["classProperty", "classMethod"],
+//         "format": ["camelCase", "UPPER_CASE"],
+//         "leadingUnderscore": "require",
+//         "modifiers": ["private"]
+//       },
+//       {
+//         "selector": ["classProperty"],
+//         "format": ["UPPER_CASE"],
+//         "modifiers": ["public", "static"],
+//         "leadingUnderscore": "forbid"
+//       },
+//       {
+//         "selector": ["classMethod"],
+//         "format": ["camelCase"],
+//         "modifiers": ["public", "static"],
+//         "leadingUnderscore": "forbid"
+//       },
+//       {
+//         "selector": ["classProperty", "classMethod"],
+//         "format": ["UPPER_CASE", "camelCase"],
+//         "modifiers": ["protected"],
+//         "leadingUnderscore": "forbid"
+//       },
+//       {
+//         "selector": ["classProperty", "classMethod"],
+//         "format": ["UPPER_CASE", "camelCase"],
+//         "modifiers": ["public"],
+//         "leadingUnderscore": "forbid"
+//       },
+//       {
+//         "selector": ["interface"],
+//         "format": ["PascalCase", "UPPER_CASE"],
+//         "prefix": ["I"]
+//       }
+//     ]
+//   },
+//   "parser": "@typescript-eslint/parser",
+//   "plugins": ["@typescript-eslint"],
+//   "parserOptions": {
+//     "ecmaVersion": 6,
+//     "sourceType": "module",
+//     "project": "./tsconfig.json"
+//   }
+// }

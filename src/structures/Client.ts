@@ -17,7 +17,9 @@ export class ExtendedClient extends Client {
     commands: Collection<string, CommandType> = new Collection();
 
     constructor() {
-        super({ intents: 32767 })
+        // Starting the bot has two steps:
+        // Instantiation and using start()
+        super({ intents: 32767 });
     }
 
     start() {
@@ -31,8 +33,12 @@ export class ExtendedClient extends Client {
         return (await import(filePath))?.default;
     }
 
-    async registerCommands({ commands, guildId }: RegisterCommandsOptions) {
-        // Register for only one ID
+    // This is what actually tells the bot what commands it has.
+    // It seems like it can remember what commands it had from
+    // the last time this function would've been run.
+    registerCommands({ commands, guildId }: RegisterCommandsOptions) {
+        // Register for only one guild Id
+        // as opposed to doing so globally.
         if (guildId) {
             this.guilds.cache.get(guildId)?.commands.set(commands);
             console.log(`Registering commands to ${guildId}`);
@@ -46,12 +52,10 @@ export class ExtendedClient extends Client {
     async registerModules() {
         // Commands
         const slashCommands: ApplicationCommandDataResolvable[] = [];
-        // This pattern means get all .ts and .js files one
-        // and two subfolders deep
-        const commandFiles = await globPromise(`${__dirname}/../commands/*/*{.ts,.js}`);
+        const commandFiles = await globPromise(`${__dirname}/../commands/**/*{.ts,.js}`);
 
         // This is actually brilliant!
-        // much faster than typing console.long("commandFiles: " + commandFiles);
+        // much faster than typing console.log("commandFiles: " + commandFiles);
         // console.log({ commandFiles });
 
         commandFiles.forEach(async filePath => {
@@ -63,11 +67,18 @@ export class ExtendedClient extends Client {
             slashCommands.push(command);
         });
 
+        this.on("ready", () => {
+            this.registerCommands({
+                commands: slashCommands,
+                guildId: process.env.GUILD_ID
+            });
+        });
+
         const eventFiles = await globPromise(`${__dirname}/../events/*{.ts,.js}`);
         eventFiles.forEach(async filePath => {
             const event: Event<keyof ClientEvents> = await this.importFile(filePath);
 
             this.on(event.event, event.run);
-        })
+        });
     }
 }
